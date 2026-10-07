@@ -142,6 +142,8 @@ main{padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1
 
 <script>
 // Everyone counts from the same moment: midnight Sept 14, 2026, New York time
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString();
 const TZ = "America/New_York";
 function nyParts(d){
   const o={}; new Intl.DateTimeFormat("en-US",{timeZone:TZ,year:"numeric",month:"numeric",day:"numeric",hour:"numeric",hourCycle:"h23"})
