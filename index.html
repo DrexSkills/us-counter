@@ -111,7 +111,7 @@ main{padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1
 <body>
 <main>
   <h1 class="names">
-    <input id="n1" aria-label="Your name" value="Me" maxlength="12"> &amp; <input id="n2" aria-label="Her name" value="You" maxlength="12">
+    H &amp; I
   </h1>
   <p class="since">together since Monday, September 14, 2026</p>
 
@@ -137,7 +137,7 @@ main{padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1
   <h2>Our milestones</h2>
   <ol class="miles" id="miles"></ol>
 
-  <footer>Tap the heart. Tap our names to change them.<br>Add to your home screen: Share → Add to Home Screen.</footer>
+  <footer>Tap the heart.<br>Add to your home screen: Share → Add to Home Screen.</footer>
 </main>
 
 <script>
@@ -154,12 +154,6 @@ function nyMidnight(y,m,d){ // m is 0-based; returns the real instant of midnigh
 const START = nyMidnight(2026,8,14);
 const START_DAY = Date.UTC(2026,8,14);
 function nyDayNumber(d){ const p=nyParts(d); return Date.UTC(p.year,p.month-1,p.day); }
-// editable names, remembered on this device
-["n1","n2"].forEach(id=>{
-  try{ const v = localStorage.getItem("us-"+id); if(v) $(id).value = v; }catch(e){}
-  $(id).addEventListener("input", e=>{ try{ localStorage.setItem("us-"+id, e.target.value); }catch(err){} });
-});
-
 const notes = [
   "Every second here is one I'm glad I spent with you.",
   "Best Monday ever: the one I met you.",
