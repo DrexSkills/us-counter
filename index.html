@@ -141,10 +141,19 @@ main{padding-left:max(1.25rem,env(safe-area-inset-left,0px));padding-right:max(1
 </main>
 
 <script>
-const START = new Date(2026, 8, 14, 0, 0, 0); // Sept 14, 2026
-const $ = id => document.getElementById(id);
-const fmt = n => n.toLocaleString();
-
+// Everyone counts from the same moment: midnight Sept 14, 2026, New York time
+const TZ = "America/New_York";
+function nyParts(d){
+  const o={}; new Intl.DateTimeFormat("en-US",{timeZone:TZ,year:"numeric",month:"numeric",day:"numeric",hour:"numeric",hourCycle:"h23"})
+    .formatToParts(d).forEach(p=>o[p.type]=+p.value); return o;
+}
+function nyMidnight(y,m,d){ // m is 0-based; returns the real instant of midnight in New York
+  let t=Date.UTC(y,m,d,4); const h=nyParts(new Date(t)).hour;
+  if(h===23) t+=36e5; else if(h===1) t-=36e5; return new Date(t);
+}
+const START = nyMidnight(2026,8,14);
+const START_DAY = Date.UTC(2026,8,14);
+function nyDayNumber(d){ const p=nyParts(d); return Date.UTC(p.year,p.month-1,p.day); }
 // editable names, remembered on this device
 ["n1","n2"].forEach(id=>{
   try{ const v = localStorage.getItem("us-"+id); if(v) $(id).value = v; }catch(e){}
@@ -160,10 +169,11 @@ const notes = [
 ];
 $("note").textContent = notes[Math.floor(Math.random()*notes.length)];
 
-function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
-function addMonths(d,n){const x=new Date(d);x.setMonth(x.getMonth()+n);return x}
+// milestones as calendar dates (UTC day numbers), shown the same for everyone
+function addDays(_,n){return START_DAY+n*864e5}
+function addMonths(_,n){const x=new Date(START_DAY);x.setUTCMonth(x.getUTCMonth()+n);return x.getTime()}
 const milestones = [
-  {t:"The day we met", d:START, e:"🌷"},
+  {t:"The day we met", d:START_DAY, e:"🌷"},
   {t:"One week", d:addDays(START,7), e:"🍓"},
   {t:"One month", d:addMonths(START,1), e:"💌"},
   {t:"50 days", d:addDays(START,50), e:"🧸"},
@@ -174,13 +184,13 @@ const milestones = [
 ];
 
 function renderMiles(now){
-  let nextFound=false;
+  let nextFound=false; const today=nyDayNumber(now);
   $("miles").innerHTML = milestones.map(m=>{
-    const done = m.d <= now;
+    const done = m.d <= today;
     let cls = done ? "done" : "";
     if(!done && !nextFound){cls="next";nextFound=true;}
-    const left = Math.ceil((m.d-now)/864e5);
-    const sub = m.d.toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"}) +
+    const left = Math.round((m.d-today)/864e5);
+    const sub = new Date(m.d).toLocaleDateString(undefined,{timeZone:"UTC",month:"long",day:"numeric",year:"numeric"}) +
       (done ? "" : ` · in ${left} day${left===1?"":"s"}`);
     return `<li class="${cls}"><span class="dot">${done?"💗":m.e}</span><div><strong>${m.t}</strong><small>${sub}</small></div></li>`;
   }).join("");
@@ -189,7 +199,7 @@ function renderMiles(now){
 let lastDay=-1;
 function tick(){
   const now=new Date(), ms=Math.max(0,now-START);
-  const days=Math.floor(ms/864e5);
+  const days=Math.round((nyDayNumber(now)-START_DAY)/864e5);
   $("days").textContent=fmt(days);
   $("daysLabel").textContent = days===1?"day of us":"days of us";
   $("w").textContent=fmt(Math.floor(days/7));
