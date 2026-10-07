@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Us 💞</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDE8EE; --paper:#FFF8F0; --rose:#E8507E; --berry:#7A2148; --butter:#FFE9A8; --ink:#4A2236; --soft:#F6C4D3;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#2A1220; --paper:#3A1A2C; --rose:#FF7AA2; --berry:#FFD1E0; --butter:#5A3A2A; --ink:#FBE3EC; --soft:#5C2A42;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#2A1220; --paper:#3A1A2C; --rose:#FF7AA2; --berry:#FFD1E0; --butter:#5A3A2A; --ink:#FBE3EC; --soft:#5C2A42;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Fredoka",ui-rounded,"Segoe UI",system-ui,sans-serif;
+  min-height:100%; overflow-x:hidden;
+  background-image:radial-gradient(var(--soft) 1.5px, transparent 1.5px);
+  background-size:22px 22px;
+}
+main{max-width:520px;margin:0 auto;padding:2.5rem 1.25rem 3rem;text-align:center}
+
+.names{
+  font-family:"Caveat",cursive; font-size:clamp(2.2rem,9vw,3rem); color:var(--berry);
+  margin:0 0 .25rem; line-height:1.1;
+}
+.names input{
+  font:inherit;color:inherit;background:transparent;border:none;border-bottom:2px dashed transparent;
+  width:6.5ch;text-align:center;padding:0;
+}
+.names input:hover,.names input:focus{border-bottom-color:var(--rose);outline:none}
+.since{margin:0 0 2rem;font-size:1rem;opacity:.75}
+
+/* the heart */
+.heart-wrap{position:relative;width:min(300px,78vw);aspect-ratio:1;margin:0 auto 1.5rem;cursor:pointer;border:none;background:none;padding:0;color:inherit;font:inherit}
+.heart-wrap:focus-visible{outline:3px dashed var(--rose);outline-offset:6px;border-radius:30px}
+.heart-wrap svg{width:100%;height:100%;filter:drop-shadow(0 10px 0 var(--soft))}
+.heart-wrap path{fill:var(--rose)}
+.beat{animation:beat 1s ease-in-out infinite}
+@keyframes beat{0%,100%{transform:scale(1)}15%{transform:scale(1.06)}30%{transform:scale(.98)}45%{transform:scale(1.04)}}
+.heart-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;padding-bottom:12%}
+.days{font-size:clamp(4rem,20vw,5.5rem);font-weight:700;line-height:1}
+.days-label{font-size:1.2rem;font-weight:500;margin-top:.2rem}
+
+.ticker{display:flex;justify-content:center;gap:.6rem;margin:0 0 2.5rem;flex-wrap:wrap}
+.tick{background:var(--paper);border:2px solid var(--soft);border-radius:18px;padding:.6rem .4rem;min-width:76px}
+.tick b{display:block;font-size:1.8rem;font-weight:600;color:var(--rose);font-variant-numeric:tabular-nums}
+.tick span{font-size:.85rem;opacity:.75}
+
+.note{
+  background:var(--butter);color:var(--ink);font-family:"Caveat",cursive;font-size:1.6rem;
+  padding:1rem 1.25rem;border-radius:6px;transform:rotate(-1.5deg);margin:0 auto 2.5rem;max-width:400px;
+  box-shadow:0 4px 0 var(--soft);
+}
+
+h2{font-family:"Caveat",cursive;font-size:2.2rem;color:var(--berry);margin:0 0 1rem;font-weight:700}
+ol.miles{list-style:none;padding:0;margin:0;text-align:left;position:relative}
+ol.miles::before{content:"";position:absolute;left:19px;top:10px;bottom:10px;border-left:3px dotted var(--soft)}
+.miles li{display:flex;align-items:center;gap:.9rem;padding:.55rem 0;position:relative}
+.dot{width:40px;height:40px;flex:none;border-radius:50%;display:grid;place-items:center;background:var(--paper);border:2px solid var(--soft);font-size:1.1rem;z-index:1}
+.done .dot{background:var(--rose);border-color:var(--rose)}
+.miles strong{font-weight:600;display:block}
+.miles small{opacity:.7;font-size:.9rem}
+.next strong::after{content:" · up next";color:var(--rose);font-weight:500}
+
+footer{margin-top:2.5rem;font-size:.9rem;opacity:.6}
+
+.pop{position:fixed;pointer-events:none;font-size:1.6rem;animation:pop 1.2s ease-out forwards;z-index:10}
+@keyframes pop{to{transform:translate(var(--dx),-160px) scale(.6);opacity:0}}
+
+@media (prefers-reduced-motion:reduce){.beat{animation:none}.pop{display:none}}
+</style>
+</head>
+<body>
+<main>
+  <h1 class="names">
+    <input id="n1" aria-label="Your name" value="Me" maxlength="12"> &amp; <input id="n2" aria-label="Her name" value="You" maxlength="12">
+  </h1>
+  <p class="since">together since Monday, September 14, 2026</p>
+
+  <button class="heart-wrap" id="heart" aria-label="Tap for hearts">
+    <svg viewBox="0 0 100 92" class="beat" style="transform-origin:50% 50%">
+      <path d="M50 88 C20 66 2 50 2 28 C2 13 13 2 27 2 C37 2 45 8 50 16 C55 8 63 2 73 2 C87 2 98 13 98 28 C98 50 80 66 50 88Z"/>
+    </svg>
+    <div class="heart-text">
+      <div class="days" id="days">0</div>
+      <div class="days-label" id="daysLabel">days of us</div>
+    </div>
+  </button>
+
+  <div class="ticker" aria-live="off">
+    <div class="tick"><b id="w">0</b><span>weeks</span></div>
+    <div class="tick"><b id="h">0</b><span>hours</span></div>
+    <div class="tick"><b id="m">0</b><span>minutes</span></div>
+    <div class="tick"><b id="s">0</b><span>seconds</span></div>
+  </div>
+
+  <p class="note" id="note"></p>
+
+  <h2>Our milestones</h2>
+  <ol class="miles" id="miles"></ol>
+
+  <footer>Tap the heart. Tap our names to change them.</footer>
+</main>
+
+<script>
+const START = new Date(2026, 8, 14, 0, 0, 0); // Sept 14, 2026
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString();
+
+// editable names, remembered on this device
+["n1","n2"].forEach(id=>{
+  try{ const v = localStorage.getItem("us-"+id); if(v) $(id).value = v; }catch(e){}
+  $(id).addEventListener("input", e=>{ try{ localStorage.setItem("us-"+id, e.target.value); }catch(err){} });
+});
+
+const notes = [
+  "Every second here is one I'm glad I spent with you.",
+  "Best Monday ever: the one I met you.",
+  "Still my favorite notification.",
+  "You + me = my favorite math.",
+  "Counting the seconds, but they never feel like enough."
+];
+$("note").textContent = notes[Math.floor(Math.random()*notes.length)];
+
+function addDays(d,n){const x=new Date(d);x.setDate(x.getDate()+n);return x}
+function addMonths(d,n){const x=new Date(d);x.setMonth(x.getMonth()+n);return x}
+const milestones = [
+  {t:"The day we met", d:START, e:"🌷"},
+  {t:"One week", d:addDays(START,7), e:"🍓"},
+  {t:"One month", d:addMonths(START,1), e:"💌"},
+  {t:"50 days", d:addDays(START,50), e:"🧸"},
+  {t:"100 days", d:addDays(START,100), e:"🎀"},
+  {t:"6 months", d:addMonths(START,6), e:"🌸"},
+  {t:"500 days", d:addDays(START,500), e:"✨"},
+  {t:"One year", d:addMonths(START,12), e:"💍"}
+];
+
+function renderMiles(now){
+  let nextFound=false;
+  $("miles").innerHTML = milestones.map(m=>{
+    const done = m.d <= now;
+    let cls = done ? "done" : "";
+    if(!done && !nextFound){cls="next";nextFound=true;}
+    const left = Math.ceil((m.d-now)/864e5);
+    const sub = m.d.toLocaleDateString(undefined,{month:"long",day:"numeric",year:"numeric"}) +
+      (done ? "" : ` · in ${left} day${left===1?"":"s"}`);
+    return `<li class="${cls}"><span class="dot">${done?"💗":m.e}</span><div><strong>${m.t}</strong><small>${sub}</small></div></li>`;
+  }).join("");
+}
+
+let lastDay=-1;
+function tick(){
+  const now=new Date(), ms=Math.max(0,now-START);
+  const days=Math.floor(ms/864e5);
+  $("days").textContent=fmt(days);
+  $("daysLabel").textContent = days===1?"day of us":"days of us";
+  $("w").textContent=fmt(Math.floor(days/7));
+  $("h").textContent=fmt(Math.floor(ms/36e5));
+  $("m").textContent=fmt(Math.floor(ms/6e4));
+  $("s").textContent=fmt(Math.floor(ms/1e3));
+  if(days!==lastDay){renderMiles(now);lastDay=days;}
+}
+tick(); setInterval(tick,1000);
+
+// tap the heart for a little burst
+const emo=["💖","💕","💗","💞","🌸"];
+$("heart").addEventListener("click",e=>{
+  const r=$("heart").getBoundingClientRect();
+  const x=e.clientX||r.left+r.width/2, y=e.clientY||r.top+r.height/2;
+  for(let i=0;i<8;i++){
+    const p=document.createElement("span");
+    p.className="pop"; p.textContent=emo[i%emo.length];
+    p.style.left=(x-12+(Math.random()*40-20))+"px"; p.style.top=(y-12)+"px";
+    p.style.setProperty("--dx",(Math.random()*160-80)+"px");
+    p.style.animationDelay=(i*40)+"ms";
+    document.body.appendChild(p); setTimeout(()=>p.remove(),1500);
+  }
+});
+</script>
+</body>
+</html>
